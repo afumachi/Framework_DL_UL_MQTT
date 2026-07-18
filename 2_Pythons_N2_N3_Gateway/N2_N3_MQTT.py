@@ -244,7 +244,7 @@ try:
 
                 
          print('Pacotes enviados = ',j,' Pacotes perdidos = ',perda_PK_RX)
-         print('Tempo = ',Tempo_gasto)
+         print('Tempo Entre Pacotes = ',Tempo_gasto)
          Log_dados.close()
          print('[LoRa] Fim da Execução')
 

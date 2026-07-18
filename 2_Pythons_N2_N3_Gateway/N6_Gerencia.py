@@ -9,7 +9,7 @@ import matplotlib.style as style
 
 style.use("ggplot")
 
-MAX_PONTOS = 60
+MAX_PONTOS = 600
 cor_rssi_down = "#1f77b4"
 cor_rssi_up = "#ff7f0e"
 cor_psr = "#2ca02c"
