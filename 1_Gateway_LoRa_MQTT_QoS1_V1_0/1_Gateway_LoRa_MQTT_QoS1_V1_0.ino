@@ -42,10 +42,10 @@ WiFiClient wifiClient;
 // =====================================================================
 
 // Configurações do Broker Mosquitto (Usando o broker público oficial)
-const char* MQTT_BROKER = "test.mosquitto.org";
+//const char* MQTT_BROKER = "test.mosquitto.org";
 
 // Configurações do Broker HiveMQ (Usando o broker público oficial)
-//const char* MQTT_BROKER   = "broker.hivemq.com";
+const char* MQTT_BROKER   = "broker.hivemq.com";
 
 const int   MQTT_PORT     = 1883;
 const char* TOPIC_DL      = "mot_lora_mqtt_AAF/gateway/downlink";  // Python → ESP32
@@ -75,10 +75,10 @@ MQTTClient mqttClient(256);   // buffer de 256 bytes (read/write)
 //                     5 - Parâmetros LoRa
 // =====================================================================
 #define FREQUENCY_IN_HZ       915E6
-#define txPower               14
+#define txPower               17
 #define spreadingFactor       7
-#define signalBandwidth       125E3
-#define codingRateDenominator 8
+#define signalBandwidth       500E3
+#define codingRateDenominator 5
 
 // =====================================================================
 //                     6 - Pinos de LED

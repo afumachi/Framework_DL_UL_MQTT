@@ -10,8 +10,8 @@ import os
 import threading
 
 # ===== Configurações MQTT =====
-#BROKER        = "broker.hivemq.com"
-BROKER        = "test.mosquitto.org"
+BROKER        = "broker.hivemq.com"
+#BROKER        = "test.mosquitto.org"
 PORTA_MQTT    = 1883
 
 # MODIFIQUE O TOPIC_DL E TOPIC_UL de acordo com SEU_NOME
