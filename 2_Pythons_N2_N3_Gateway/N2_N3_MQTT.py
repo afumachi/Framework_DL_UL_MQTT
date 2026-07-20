@@ -22,6 +22,7 @@ TOPIC_UL      = "mot_lora_mqtt_AAF/gateway/uplink"     # ESP32 publica  → Pyth
 # confirma (PUBACK) e há retransmissão se a confirmação não chegar.
 # Importante para o dado de luminosidade, que é a peça central do framework.
 MQTT_QOS      = 1
+estado_mqtt = 0
 
 # ===== Variáveis globais =====
 Tamanho_pacote = 20
@@ -32,12 +33,15 @@ Pacote_UL_payload = bytearray(Tamanho_pacote)
 
 # ===== Callbacks MQTT
 def on_connect(client, userdata, flags, reason_code, properties):
+    global estado_mqtt
     if reason_code == 0:
         print("[MQTT] Conectado ao Broker MQTT com sucesso.")
         client.subscribe(TOPIC_UL, qos=MQTT_QOS)
         print(f"[MQTT] Inscrito no tópico: {TOPIC_UL} (QoS{MQTT_QOS})")
+        estado_mqtt = 1
     else:
         print(f"[MQTT] Falha na conexão. Código: {reason_code}")
+        estado_mqtt = 0
 
 def on_publish(client, userdata, mid, reason_code, properties):
     """Confirmação de entrega (PUBACK) do pacote DL publicado em QoS1."""
@@ -55,7 +59,9 @@ def on_disconnect(client, userdata, flags, reason_code, properties):
     if reason_code != 0:
         print(f"[MQTT] Desconectado inesperadamente (rc={reason_code}). Tentando reconectar...")      
         # Utilizando loop_start() neste código, caso NÃO desmarque a linha abaixo:
-        # client.reconnect()
+        estado_mqtt = 0
+        client.reconnect()
+        
 
 # ===== Inicialização do cliente MQTT =====
 client = mqtt.Client(CallbackAPIVersion.VERSION2)
@@ -112,6 +118,10 @@ try:
       print("Arquivo de log: %s" % filename1)
       Cabecalho = 'Time stamp,Contador,DL_B0,DL_B1,DL_B2,DL_B3,DL_B4,DL_B5,DL_B6,DL_B7,DL_B8,DL_B9,DL_B10,DL_B11,DL_B12,DL_B13,DL_B14,DL_B15,DL_B16,DL_B17,DL_B18,DL_B19,UL_B0,UL_B1,UL_B2,UL_B3,UL_B4,UL_B5,UL_B6,UL_B7,UL_B8,UL_B9,UL_B10,UL_B11,UL_B12,UL_B13,UL_B14,UL_B15,UL_B16,UL_B17,UL_B18,UL_B19'
       print(Cabecalho,file=Log_dados)
+
+      # Caso MQTT desconectado - Reconectar
+      if estado_mqtt != 1:
+          client.reconnect()      
 
       # =============== Camada de aplicação DL
       Comando_LED_amarelo = 0  # Inicia apagado
@@ -188,9 +198,9 @@ try:
                print("[MQTT] Não foi possível publicar. Cliente desconectado.")
                # Inserir Lógica de contingência se o cliente já estiver deslogado
                medidas = 0
-               client.loop_stop()
                client.disconnect()
-               print("[MQTT] Desconectado do broker.")
+               print("[MQTT] Reconectando ao broker...")
+               client.reconnect()
 
             # Aguarda tempo de Publicação no BROKER + Tempo Rádio LoRa
             time.sleep(Tempo_entre_pacotes/2)
