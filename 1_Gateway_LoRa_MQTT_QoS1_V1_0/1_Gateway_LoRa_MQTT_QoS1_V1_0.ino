@@ -77,8 +77,8 @@ MQTTClient mqttClient(256);   // buffer de 256 bytes (read/write)
 #define FREQUENCY_IN_HZ       915E6
 #define txPower               17
 #define spreadingFactor       7
-#define signalBandwidth       500E3
-#define codingRateDenominator 5
+#define signalBandwidth       125E3
+#define codingRateDenominator 8
 
 // =====================================================================
 //                     6 - Pinos de LED
