@@ -54,7 +54,7 @@ void Phy_radio_send_DL() {
   digitalWrite(LED_VERMELHO_PIN, LOW);
 }
 
-// ==================== RECEBE PACOTE UL DO RÁ DIO RFM95 ==============
+// ==================== RECEBE PACOTE UL DO RÁDIO RFM95 ==============
 // (sem alterações em relação à versão serial)
 void Phy_radio_receive_UL() {
 

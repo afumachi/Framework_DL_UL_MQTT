@@ -18,6 +18,12 @@ while True:
         if nome.endswith(".txt"):
             arquivo_entrada = "N4/Dados_Brutos/" + nome
 
+    # Se ainda não existe nenhum arquivo bruto em N4/Dados_Brutos,
+    # aguarda o N2/N3 criar o primeiro arquivo e tenta de novo
+    if arquivo_entrada == "":
+        time.sleep(1)
+        continue
+
     # Abre o arquivo de dados brutos
     arquivo = open(arquivo_entrada,"r")
     linhas = arquivo.readlines()
@@ -28,16 +34,28 @@ while True:
 
     # Começa em 1 para pular o cabeçalho do arquivo
     for i in range(1,len(linhas)):
-        partes = linhas[i].split(",")
+        # Cada linha é processada individualmente: se o N2/N3 ainda estiver
+        # no meio da escrita (linha incompleta) ou a linha vier corrompida,
+        # ela é apenas descartada em vez de derrubar o laço inteiro
+        try:
+            partes = linhas[i].split(",")
 
-        # No arquivo bruto, os bytes do uplink começam na posição 22
-        # A luminosidade está nos bytes UL_B18 (40) e UL_B19 (41)
-        UL_B18 = int(partes[40])
-        UL_B19 = int(partes[41])
+            # No arquivo bruto, os bytes do uplink começam na posição 22
+            # A luminosidade está nos bytes UL_B18 (40) e UL_B19 (41)
+            UL_B18 = int(partes[40])
+            UL_B19 = int(partes[41])
 
-        # Reconstrói a luminosidade usando os dois bytes
-        luminosidade = (UL_B18*256 + UL_B19)
-        luminosidades.append(float(luminosidade))
+            # Reconstrói a luminosidade usando os dois bytes
+            luminosidade = (UL_B18*256 + UL_B19)
+            luminosidades.append(float(luminosidade))
+        except (IndexError, ValueError):
+            continue
+
+    # Se nenhuma linha válida foi lida ainda (arquivo novo, só com
+    # cabeçalho, ou todas as linhas descartadas), aguarda e tenta de novo
+    if len(luminosidades) == 0:
+        time.sleep(1)
+        continue
 
     # Grava a luminosidade em arquivo temporário
     f_lum = open(arquivo_luminosidade,"w")
