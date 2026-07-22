@@ -117,8 +117,8 @@ void setup() {
   delay(20);
 
   // Cadastre quantas redes você quiser (SSID, Senha)
-  wifiMulti.addAP("MJCA_FUNDOS", "21092429MJC@");
   wifiMulti.addAP("COLETTI_ADV_CRIS", "45384609");
+  wifiMulti.addAP("MJCA_FUNDOS", "21092429MJC@");
 	wifiMulti.addAP("aafwifi", "aaf12345678");
 	wifiMulti.addAP("CHACARA BBC", "Ailton1960#");
 	wifiMulti.addAP("Claro-EB66", "54b80a7deb66");
