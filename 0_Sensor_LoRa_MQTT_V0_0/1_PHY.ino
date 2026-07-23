@@ -54,7 +54,7 @@ void Phy_radio_send_UL() {
   // Usamos uint8_t (byte) para ocupar apenas 1 byte na memória.
   // Usamos a função round() para garantir que o número float seja 
   // arredondado corretamente antes de virar inteiro.
-  SNR_DL_inteiro = (uint8_t)round((S  * 4.0); // Offset de 30.0dB e passo de 0.25dB (* 4.0)
+  SNR_DL_inteiro = (uint8_t)round((SNR_DL + 30.0)  * 4.0); // Offset de 30.0dB e passo de 0.25dB (* 4.0)
   PacoteUL[1] = byte(SNR_DL_inteiro);
  
   // ================= TRANMISSÃO DO PACOTE ENVIDADO PELO ESP32 PARA O RFM95
