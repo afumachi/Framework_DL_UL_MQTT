@@ -71,7 +71,7 @@ void Phy_radio_receive_UL() {
 
       RSSI_dBm_UL = LoRa.packetRssi();
       SNR_UL      = LoRa.packetSnr();
-
+      Serial.println(SNR_UL);
 
       delay(50);
       digitalWrite(LED_VERDE_PIN, LOW);
