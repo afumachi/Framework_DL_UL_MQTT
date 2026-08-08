@@ -31,7 +31,8 @@ void App_radio_send_UL() {
   // A quebra do valor em dois bytes em função de ser um ADC de 12 bits
   PacoteUL[18] = (luminosidade/256); // Valor inteiro da divisão da luminosidade por 256
   PacoteUL[19] = (luminosidade%256); // Resto da divisão
-  
+  Serial.print("luminosidade: ");
+  Serial.println(luminosidade);
   //================== CHAMA A CAMADA DE TRANSPORTE DE UL
   Transp_radio_send_UL();
 }

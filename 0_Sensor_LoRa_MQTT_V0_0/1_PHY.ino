@@ -68,7 +68,7 @@ void Phy_radio_send_UL() {
   }
   LoRa.endPacket();                   // Finaliza o envio do pacote e o RFM95 transmite o pacote para o Gateway
   
-  delay(50);
+  //delay(50);
   digitalWrite(LED_VERMELHO_PIN, LOW);
 
 }
