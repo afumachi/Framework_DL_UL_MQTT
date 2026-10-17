@@ -15,8 +15,8 @@ BROKER        = "broker.hivemq.com"
 PORTA_MQTT    = 1883
 
 # MODIFIQUE O TOPIC_DL E TOPIC_UL de acordo com SEU_NOME
-TOPIC_DL      = "mot_lora_mqtt_AAF/gateway/downlink"   # Python publica → ESP32 assina
-TOPIC_UL      = "mot_lora_mqtt_AAF/gateway/uplink"     # ESP32 publica  → Python assina
+TOPIC_DL      = "mot_mqtt_AAF/gateway/downlink"   # Python publica → ESP32 assina
+TOPIC_UL      = "mot_mqtt_AAF/gateway/uplink"     # ESP32 publica  → Python assina
 
 # QoS usado nos dois sentidos (DL e UL). QoS1 = "at least once": o broker
 # confirma (PUBACK) e há retransmissão se a confirmação não chegar.
@@ -168,9 +168,14 @@ try:
             Pacote_DL[16] = Comando_LED_amarelo
             # ======== Camada de transporte DL
             Contador_pkt_DL = Contador_pkt_DL + 1
-            if Contador_pkt_DL == 256:
-               Contador_pkt_DL = 0      
-            Pacote_DL[12] = int(Contador_pkt_DL)
+            #if Contador_pkt_DL == 256:
+            #   Contador_pkt_DL = 0      
+            #Pacote_DL[12] = int(Contador_pkt_DL)
+
+            # No Python (N2):
+            # Se o byte 12 for o MSB e o byte 13 for o LSB:
+            Pacote_DL[12] = (Contador_pkt_DL >> 8) & 0xFF  # MSB
+            Pacote_DL[13] = Contador_pkt_DL & 0xFF         # LSB            
             # ======== Camada de rede DL
             Pacote_DL[8] = ID_sensor
             Pacote_DL[9] = ID_gateway

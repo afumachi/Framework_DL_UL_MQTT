@@ -31,7 +31,7 @@ void Phy_mqtt_receive_DL() {
     ID_gateway = PacoteDL[10];       // Identifica o gateway
 
     // No ESP32 (C++):
-    int Conta_Pacote_DL = (PacoteDL[12] * 256) + PacoteDL[13];
+    Conta_Pacote_DL = (PacoteDL[12] << 8) | PacoteDL[13];
     Serial.print("[PHY] Pacote DL recebido via MQTT : ");
     Serial.println(Conta_Pacote_DL);
 

@@ -99,7 +99,7 @@ int       RSSI_dBm_UL;
 int       RSSI_UL;
 float     SNR_UL;
 uint8_t   SNR_UL_inteiro;
-uint16_t Conta_Pacote_DL = 0;
+int       Conta_Pacote_DL = 0;
 // =====================================================================
 //                     8 - Variáveis MQTT
 // =====================================================================
