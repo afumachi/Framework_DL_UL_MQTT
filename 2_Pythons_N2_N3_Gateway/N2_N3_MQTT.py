@@ -21,7 +21,7 @@ TOPIC_UL      = "mot_lora_mqtt_AAF/gateway/uplink"     # ESP32 publica  → Pyth
 # QoS usado nos dois sentidos (DL e UL). QoS1 = "at least once": o broker
 # confirma (PUBACK) e há retransmissão se a confirmação não chegar.
 # Importante para o dado de luminosidade, que é a peça central do framework.
-MQTT_QOS      = 1
+MQTT_QOS      = 0
 estado_mqtt = 0
 
 # ===== Variáveis globais =====
@@ -203,7 +203,7 @@ try:
                client.reconnect()
 
             # Aguarda tempo de Publicação no BROKER + Tempo Rádio LoRa
-            time.sleep(Tempo_entre_pacotes/2)
+            time.sleep(Tempo_entre_pacotes)
 
             # ======== COLETA UPLINK NO BROKER ========
             # Aguarda novo pacote UL publicado pelo Gateway (timeout = Tempo_entre_pacotes)

@@ -48,8 +48,8 @@ WiFiClient wifiClient;
 const char* MQTT_BROKER   = "broker.hivemq.com";
 
 const int   MQTT_PORT     = 1883;
-const char* TOPIC_DL      = "mot_lora_mqtt_AAF/gateway/downlink";  // Python → ESP32
-const char* TOPIC_UL      = "mot_lora_mqtt_AAF/gateway/uplink";    // ESP32  → Python
+const char* TOPIC_DL      = "mot_mqtt_AAF/gateway/downlink";  // Python → ESP32
+const char* TOPIC_UL      = "mot_mqtt_AAF/gateway/uplink";    // ESP32  → Python
 String CLIENT_ID ;         // ID único no broker através do Endereço MAC do ESP32
 
 // QoS usado nos dois sentidos (DL e UL). QoS1 = "at least once": o broker
@@ -74,11 +74,11 @@ MQTTClient mqttClient(256);   // buffer de 256 bytes (read/write)
 // =====================================================================
 //                     5 - Parâmetros LoRa
 // =====================================================================
-#define FREQUENCY_IN_HZ       915E6
+#define FREQUENCY_IN_HZ       903E6
 #define txPower               17
 #define spreadingFactor       7
-#define signalBandwidth       125E3
-#define codingRateDenominator 8
+#define signalBandwidth       500E3
+#define codingRateDenominator 5
 
 // =====================================================================
 //                     6 - Pinos de LED
@@ -99,7 +99,7 @@ int       RSSI_dBm_UL;
 int       RSSI_UL;
 float     SNR_UL;
 uint8_t   SNR_UL_inteiro;
-
+uint16_t Conta_Pacote_DL = 0;
 // =====================================================================
 //                     8 - Variáveis MQTT
 // =====================================================================

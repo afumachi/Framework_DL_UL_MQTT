@@ -30,7 +30,10 @@ void Phy_mqtt_receive_DL() {
     }
     ID_gateway = PacoteDL[10];       // Identifica o gateway
 
-    Serial.println("[PHY] Pacote DL recebido via MQTT.");
+    // No ESP32 (C++):
+    int Conta_Pacote_DL = (PacoteDL[12] * 256) + PacoteDL[13];
+    Serial.print("[PHY] Pacote DL recebido via MQTT : ");
+    Serial.println(Conta_Pacote_DL);
 
     // Chama camada física para transmitir pelo rádio RFM95
     Phy_radio_send_DL();
@@ -73,7 +76,7 @@ void Phy_radio_receive_UL() {
       SNR_UL      = LoRa.packetSnr();
       Serial.println(SNR_UL);
 
-      delay(50);
+      delay(20);
       digitalWrite(LED_VERDE_PIN, LOW);
 
       // Chama função de envio UL agora via MQTT
